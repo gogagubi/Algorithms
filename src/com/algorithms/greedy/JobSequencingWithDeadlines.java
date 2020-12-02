@@ -3,6 +3,12 @@ package com.algorithms.greedy;
 
 public class JobSequencingWithDeadlines {
 
+    /**
+     * OBJECTIVE
+     * <p>
+     * Find maximum profit that can be done in the given deadlines
+     */
+
     public static void main(String[] args) {
         if (true) {
             JobSequencingWithDeadlines s = new JobSequencingWithDeadlines();

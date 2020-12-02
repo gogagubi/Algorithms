@@ -5,6 +5,13 @@ import java.util.Queue;
 
 public class KsapSack {
 
+    /**
+     * OBJECTIVE
+     * <p>
+     * We are bag which size is M unit(assume kg). Find the maximum price of objects
+     * that can carry in the given bag
+     */
+
     public static void main(String[] args) {
         if (true) {
             KsapSack s = new KsapSack();
