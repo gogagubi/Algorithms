@@ -6,7 +6,7 @@ public class JobSequencingWithDeadlines {
     /**
      * OBJECTIVE
      * <p>
-     * Find maximum profit that can be done in the given deadlines
+     * Find maximum profit that can be made in the given deadlines
      */
 
     public static void main(String[] args) {
