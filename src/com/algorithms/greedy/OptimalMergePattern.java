@@ -40,15 +40,15 @@ public class OptimalMergePattern {
         int N = A.length;
         if (N == 0) return 0;
 
-        Queue<Integer> queue = new PriorityQueue<>();
-        for (int i : A) queue.add(i);
+        Queue<Integer> minHeap = new PriorityQueue<>();
+        for (int i : A) minHeap.add(i);
 
-        while (queue.size() >= 2) {
-            int left = queue.poll();
-            int right = queue.poll();
+        while (minHeap.size() >= 2) {
+            int left = minHeap.poll();
+            int right = minHeap.poll();
 
             int merged = left + right;
-            queue.add(merged);
+            minHeap.add(merged);
             ans += merged;
         }
 

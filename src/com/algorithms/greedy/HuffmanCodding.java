@@ -90,18 +90,18 @@ public class HuffmanCodding {
         }
 
         //sort by frequencies each pair
-        Queue<TreeNode> queue = new PriorityQueue<>((a, b) -> a.val - b.val);
+        Queue<TreeNode> minHeap = new PriorityQueue<>((a, b) -> a.val - b.val);
         for (int i = 0; i < frequencies.length; i++) {
             if (frequencies[i] > 0) {
-                queue.add(new TreeNode(frequencies[i], (char) (i), null, null));
+                minHeap.add(new TreeNode(frequencies[i], (char) (i), null, null));
             }
         }
 
         Queue<TreeNode> treeQueue = new LinkedList<>();
 
-        while (!queue.isEmpty()) {
-            TreeNode left = queue.poll();
-            TreeNode right = queue.peek();
+        while (!minHeap.isEmpty()) {
+            TreeNode left = minHeap.poll();
+            TreeNode right = minHeap.peek();
 
             TreeNode node = treeQueue.peek();
             if (node != null && (right == null || Math.abs(node.val - left.val) <= Math.abs(left.val - right.val))) {
@@ -111,7 +111,7 @@ public class HuffmanCodding {
                 TreeNode rightNode = left;
                 treeQueue.add(new TreeNode(leftNode.val + rightNode.val, leftNode, rightNode));
             } else if (right != null) {
-                right = queue.poll();
+                right = minHeap.poll();
                 treeQueue.add(new TreeNode(left.val + right.val, left, right));
             }
         }
