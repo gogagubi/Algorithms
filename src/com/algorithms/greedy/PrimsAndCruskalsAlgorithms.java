@@ -169,16 +169,16 @@ public class PrimsAndCruskalsAlgorithms {
                 map.put(i[1], r);
             }
 
-            return hasCycleDfs(edge[0], 0, new boolean[n + 1], map);
+            return dfs(edge[0], 0, new boolean[n + 1], map);
         }
 
-        static boolean hasCycleDfs(int key, int exKey, boolean[] visited, Map<Integer, List<Integer>> map) {
+        static boolean dfs(int key, int exKey, boolean[] visited, Map<Integer, List<Integer>> map) {
             if (visited[key]) return true;
             visited[key] = true;
 
             for (int node : map.get(key)) {
                 if (node != exKey) {
-                    boolean res = hasCycleDfs(node, key, visited, map);
+                    boolean res = dfs(node, key, visited, map);
                     if (res) return res;
                 }
             }
