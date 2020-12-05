@@ -17,25 +17,25 @@ public class OptimalMergePattern {
             OptimalMergePattern s = new OptimalMergePattern();
             int[] A = {20, 30, 10, 5, 30};
 
-            System.out.println("Result " + s.merge(A));
+            System.out.println("Result " + s.minAction(A));
         }
 
         if (true) {
             OptimalMergePattern s = new OptimalMergePattern();
             int[] A = {20};
 
-            System.out.println("Result " + s.merge(A));
+            System.out.println("Result " + s.minAction(A));
         }
 
         if (true) {
             OptimalMergePattern s = new OptimalMergePattern();
             int[] A = {20, 30};
 
-            System.out.println("Result " + s.merge(A));
+            System.out.println("Result " + s.minAction(A));
         }
     }
 
-    private int merge(int[] A) {
+    private int minAction(int[] A) {
         int ans = 0;
         int N = A.length;
         if (N == 0) return 0;

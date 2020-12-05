@@ -19,7 +19,7 @@ public class KsapSack {
             int[] prices = {10, 5, 15, 7, 6, 18, 3};
             int[] weights = {2, 3, 5, 7, 1, 4, 1};
 
-            System.out.println("Result " + s.findMaxPrice(M, prices, weights));
+            System.out.println("Result " + s.maxPrice(M, prices, weights));
         }
     }
 
@@ -33,7 +33,7 @@ public class KsapSack {
         }
     }
 
-    private double findMaxPrice(int M, int[] prices, int[] weights) {
+    private double maxPrice(int M, int[] prices, int[] weights) {
         double ans = 0;
         int N = prices.length;
 

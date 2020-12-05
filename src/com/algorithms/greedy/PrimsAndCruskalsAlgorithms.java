@@ -26,7 +26,7 @@ public class PrimsAndCruskalsAlgorithms {
                     {5, 7, 24},
             };
 
-            System.out.println("Prim's Algorithm Says " + Prims.primsAlgorithm(n, graph));
+            System.out.println("Prim's Algorithm Says " + Prims.minCost(n, graph));
         }
 
         if (true) {
@@ -44,13 +44,13 @@ public class PrimsAndCruskalsAlgorithms {
                     {5, 7, 24},
             };
 
-            System.out.println("Kruskal's Algorithm Says " + Kruskals.kruskalsAlgorithm(n, graph));
+            System.out.println("Kruskal's Algorithm Says " + Kruskals.minCost(n, graph));
         }
     }
 
     static class Prims {
         //Finds Min cost of Spanning Tree using Prim's Algorithm
-        static int primsAlgorithm(int n, int[][] graph) {
+        static int minCost(int n, int[][] graph) {
             int ans = 0;
             if (graph.length == 0) return ans;
 
@@ -127,7 +127,7 @@ public class PrimsAndCruskalsAlgorithms {
 
     static class Kruskals {
         //Finds Min cost of Spanning Tree using Prim's Algorithm
-        static int kruskalsAlgorithm(int n, int[][] graph) {
+        static int minCost(int n, int[][] graph) {
             int ans = 0;
 
             Queue<int[]> minHeap = new PriorityQueue<>((a, b) -> a[2] - b[2]);
