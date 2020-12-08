@@ -26,7 +26,7 @@ public class DijktaAlgorithm {
                     {5, 6, 5}
             };
 
-            System.out.println("Result " + s.shortestPath(n, start, graph));
+            System.out.println("Result " + s.shortestPath(n, start, graph)); //expected 9
         }
 
         if (true) {
@@ -46,7 +46,7 @@ public class DijktaAlgorithm {
                     {6, 5, 3},
             };
 
-            System.out.println("Result " + s.shortestPath(n, start, graph));
+            System.out.println("Result " + s.shortestPath(n, start, graph)); //expected 45
         }
     }
 
@@ -55,35 +55,36 @@ public class DijktaAlgorithm {
         Map<Integer, List<int[]>> map = buildMap(graph);
 
         Map<Integer, Integer> values = new HashMap<>();
-        Set<Integer> selected = new HashSet<>();
-        selected.add(start);
+        boolean[] selected = new boolean[n + 1];
 
-        return dfs(start, 0, map, values, selected);
-    }
+        Queue<int[]> minHeap = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+        minHeap.add(new int[]{start, 0});
 
-    private int dfs(int key, int val, Map<Integer, List<int[]>> map, Map<Integer, Integer> values, Set<Integer> selected) {
-        int[] minEdge = null;
-        int minCost = Integer.MAX_VALUE;
-        if (!map.containsKey(key)) return val;
+        while (!minHeap.isEmpty()) {
+            int[] curr = minHeap.poll();
+            if(!map.containsKey(curr[0])) return values.get(curr[0]);
 
-        for (int[] i : map.get(key)) {
-            if (!selected.contains(i[1])) {
-                int potentialMin = Math.min(val + i[2], values.getOrDefault(i[1], Integer.MAX_VALUE));
-                if (potentialMin < minCost) {
-                    minEdge = i;
-                    minCost = potentialMin;
+            if (selected[curr[0]]) continue;
+            selected[curr[0]] = true;
+
+            int routes = 0;
+            for (int[] i : map.get(curr[0])) {
+                int val = curr[1] + i[1];
+                if (values.containsKey(i[0])) val = Math.min(val, values.get(i[0]));
+                values.put(i[0], val);
+
+                if(!selected[i[0]]) {
+                    minHeap.add(new int[]{i[0], val});
+                    routes ++;
                 }
+            }
 
-                values.put(i[1], potentialMin);
+            if(routes == 0){
+                return curr[1];
             }
         }
 
-        if (minEdge != null) {
-            selected.add(minEdge[1]);
-            val = dfs(minEdge[1], minCost, map, values, selected);
-        }
-
-        return val;
+        return 0;
     }
 
     private Map<Integer, List<int[]>> buildMap(int[][] graph) {
@@ -91,7 +92,7 @@ public class DijktaAlgorithm {
 
         for (int[] i : graph) {
             List<int[]> l = map.getOrDefault(i[0], new ArrayList<>());
-            l.add(i);
+            l.add(new int[]{i[1], i[2]});
             map.put(i[0], l);
         }
 
