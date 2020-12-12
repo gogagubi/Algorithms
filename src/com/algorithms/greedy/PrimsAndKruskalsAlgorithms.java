@@ -2,17 +2,18 @@ package com.algorithms.greedy;
 
 import java.util.*;
 
-public class PrimsAndCruskalsAlgorithms {
+public class PrimsAndKruskalsAlgorithms {
 
     /**
      * OBJECTIVE
      * <p>
-     * We are given graph. We should find min cost of spanning tree
+     * We are given graph. We should find min cost of spanning tree.
+     * We should find subtree which has all the nodes of original tree,
+     * all nodes are connected with min weight and does't have cycle
      */
 
     public static void main(String[] args) {
         if (true) {
-            PrimsAndCruskalsAlgorithms s = new PrimsAndCruskalsAlgorithms();
             int n = 7;
             int[][] graph = {
                     {1, 2, 28},
@@ -30,7 +31,6 @@ public class PrimsAndCruskalsAlgorithms {
         }
 
         if (true) {
-            PrimsAndCruskalsAlgorithms s = new PrimsAndCruskalsAlgorithms();
             int n = 7;
             int[][] graph = {
                     {1, 2, 28},
@@ -54,54 +54,34 @@ public class PrimsAndCruskalsAlgorithms {
             int ans = 0;
             if (graph.length == 0) return ans;
 
-            int minCost = Integer.MAX_VALUE;
+            Integer minCost = null;
             int[] minEdge = null;
 
             //find edge with min cost
             for (int[] i : graph) {
-                if (i[2] <= minCost) {
+                if (minCost == null || i[2] <= minCost) {
                     minCost = i[2];
                     minEdge = i;
                 }
             }
 
-            //add initial cost to the answer
-            boolean[] visited = new boolean[n + 1];
-            visited[minEdge[0]] = true;
-            visited[minEdge[1]] = true;
-            ans += minEdge[2];
+            boolean[] visited = new boolean[n + 1]; // track recursion
+            Map<Integer, List<int[]>> map = buildMap(graph); //map for connected edges
+            Queue<int[]> minHeap = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+            minHeap.add(new int[]{minEdge[0], 0});
 
-            //build connection map
-            Map<Integer, List<int[]>> map = buildMap(graph);
+            //use BFS with min heap to keep taking connected edge with min price on each iteration
+            while (!minHeap.isEmpty()) {
+                int[] curr = minHeap.poll();
+                if (visited[curr[0]]) continue;
+                visited[curr[0]] = true;
+                ans += curr[1];
 
-            //continue checking minimum connected edge until we tackle with cycle
-            while (minEdge != null) {
-                int src = minEdge[0];
-                int dest = minEdge[1];
-
-                minCost = Integer.MAX_VALUE;
-                minEdge = null;
-
-                //check from left side
-                for (int[] i : map.get(src)) {
-                    if (!visited[i[1]] && i[2] < minCost) {
-                        minCost = i[2];
-                        minEdge = i;
+                //apply adjustment nodes in the min heap to take into consideration for the further iteration
+                if (map.containsKey(curr[0])) {
+                    for (int[] i : map.get(curr[0])) {
+                        if (!visited[i[0]]) minHeap.add(i);
                     }
-                }
-
-                //check from right side
-                for (int[] i : map.get(dest)) {
-                    if (!visited[i[1]] && i[2] < minCost) {
-                        minCost = i[2];
-                        minEdge = i;
-                    }
-                }
-
-                if (minEdge != null) {
-                    visited[minEdge[0]] = true;
-                    visited[minEdge[1]] = true;
-                    ans += minEdge[2];
                 }
             }
 
@@ -112,11 +92,11 @@ public class PrimsAndCruskalsAlgorithms {
             Map<Integer, List<int[]>> map = new HashMap<>();
             for (int[] i : graph) {
                 List<int[]> l = map.getOrDefault(i[0], new ArrayList<>());
-                l.add(new int[]{i[0], i[1], i[2]});
+                l.add(new int[]{i[1], i[2]});
                 map.put(i[0], l);
 
                 List<int[]> s = map.getOrDefault(i[1], new ArrayList<>());
-                s.add(new int[]{i[1], i[0], i[2]});
+                s.add(new int[]{i[0], i[2]});
                 map.put(i[1], s);
             }
 
