@@ -1,24 +1,24 @@
 package com.algorithms.general;
 
-public class reverseInteger {
+public class ReverseInteger {
 
     public static void main(String[] args) {
         if (true) {
-            reverseInteger s = new reverseInteger();
+            ReverseInteger s = new ReverseInteger();
             int x = 123;
 
             System.out.println("Result " + s.reverse(x));
         }
 
         if (true) {
-            reverseInteger s = new reverseInteger();
+            ReverseInteger s = new ReverseInteger();
             int x = 120;
 
             System.out.println("Result " + s.reverse(x));
         }
 
         if (true) {
-            reverseInteger s = new reverseInteger();
+            ReverseInteger s = new ReverseInteger();
             int x = -128;
 
             System.out.println("Result " + s.reverse(x));
