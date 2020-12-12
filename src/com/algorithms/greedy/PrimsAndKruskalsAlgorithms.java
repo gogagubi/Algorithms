@@ -65,7 +65,7 @@ public class PrimsAndKruskalsAlgorithms {
                 }
             }
 
-            boolean[] visited = new boolean[n + 1]; // track recursion
+            boolean[] visited = new boolean[n + 1]; // avoid cycle
             Map<Integer, List<int[]>> map = buildMap(graph); //map for connected edges
             Queue<int[]> minHeap = new PriorityQueue<>((a, b) -> a[1] - b[1]);
             minHeap.add(new int[]{minEdge[0], 0});
