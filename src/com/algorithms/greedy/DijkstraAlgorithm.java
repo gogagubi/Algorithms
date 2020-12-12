@@ -2,17 +2,17 @@ package com.algorithms.greedy;
 
 import java.util.*;
 
-public class DijktaAlgorithm {
+public class DijkstraAlgorithm {
 
     /**
      * OBJECTIVE
      * <p>
-     * We should find shortest path in the directed graph
+     * We should find shortest path in the undirected graph. Find shortest distance to each node to each node
      */
 
     public static void main(String[] args) {
         if (true) {
-            DijktaAlgorithm s = new DijktaAlgorithm();
+            DijkstraAlgorithm s = new DijkstraAlgorithm();
             int n = 6;
             int start = 1;
             int[][] graph = {
@@ -30,7 +30,7 @@ public class DijktaAlgorithm {
         }
 
         if (true) {
-            DijktaAlgorithm s = new DijktaAlgorithm();
+            DijkstraAlgorithm s = new DijkstraAlgorithm();
             int n = 6;
             int start = 1;
             int[][] graph = {
@@ -48,9 +48,29 @@ public class DijktaAlgorithm {
 
             System.out.println("Result " + s.shortestPath(n, start, graph)); //expected 45
         }
+
+
+        if (true) {
+            DijkstraAlgorithm s = new DijkstraAlgorithm();
+            int n = 7;
+            int start = 1;
+            int[][] graph = {
+                    {1, 2, 28},
+                    {1, 6, 10},
+                    {2, 3, 16},
+                    {2, 7, 14},
+                    {3, 4, 12},
+                    {4, 5, 22},
+                    {4, 7, 18},
+                    {5, 6, 25},
+                    {5, 7, 24}
+            };
+
+            System.out.println("Result " + s.shortestPath(n, start, graph)); //expected 45
+        }
     }
 
-    private int shortestPath(int n, int start, int[][] graph) {
+    private Map<Integer, Integer> shortestPath(int n, int start, int[][] graph) {
         //build map for directed graph
         Map<Integer, List<int[]>> map = buildMap(graph);
 
@@ -62,29 +82,30 @@ public class DijktaAlgorithm {
 
         while (!minHeap.isEmpty()) {
             int[] curr = minHeap.poll();
-            if(!map.containsKey(curr[0])) return values.get(curr[0]);
+            if (!map.containsKey(curr[0])) continue;
 
             if (selected[curr[0]]) continue;
             selected[curr[0]] = true;
 
-            int routes = 0;
             for (int[] i : map.get(curr[0])) {
                 int val = curr[1] + i[1];
                 if (values.containsKey(i[0])) val = Math.min(val, values.get(i[0]));
                 values.put(i[0], val);
 
-                if(!selected[i[0]]) {
+                if (!selected[i[0]]) {
                     minHeap.add(new int[]{i[0], val});
-                    routes ++;
                 }
-            }
-
-            if(routes == 0){
-                return curr[1];
             }
         }
 
-        return 0;
+        Map<Integer, Integer> ans = new HashMap<>();
+        for (int key : values.keySet()) {
+            if (key != start) {
+                ans.put(key, values.get(key));
+            }
+        }
+
+        return ans;
     }
 
     private Map<Integer, List<int[]>> buildMap(int[][] graph) {
@@ -94,6 +115,10 @@ public class DijktaAlgorithm {
             List<int[]> l = map.getOrDefault(i[0], new ArrayList<>());
             l.add(new int[]{i[1], i[2]});
             map.put(i[0], l);
+
+            List<int[]> r = map.getOrDefault(i[1], new ArrayList<>());
+            r.add(new int[]{i[0], i[2]});
+            map.put(i[1], r);
         }
 
         return map;
