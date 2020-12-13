@@ -8,7 +8,7 @@ public class KsapSack {
     /**
      * OBJECTIVE
      * <p>
-     * We are bag which size is M unit(assume kg). Find the maximum price of objects
+     * We have bag which size is M unit(assume kg). Find the maximum price of objects
      * that can carry in the given bag
      */
 
